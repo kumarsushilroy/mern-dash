@@ -4,6 +4,9 @@ const dotenv = require('dotenv');
 const cors = require('cors')
 dotenv.config();
 
+// For Deploy.....
+const path = require('path');
+
 // Routes
 const userRoute = require('./Routes/UserRoute');
 const productRoute = require('./Routes/ProductRoute');
@@ -20,6 +23,15 @@ app.use(cors());
 //Route
 app.use(userRoute);
 app.use(productRoute);
+
+
+// Static files for deploy......
+app.use(express.static(path.join(__dirname, './client/dist')));
+
+// function for deployment............
+app.get('*', (req,res)=>{
+    res.sendFile(path.join(__dirname, "./client/dist/index.html"))
+});
 
 
 
